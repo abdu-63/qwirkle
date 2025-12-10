@@ -93,10 +93,15 @@ void afficher_regles() {
     printf("5. Fin : Quand la pioche est vide et un joueur n'a plus de tuiles.\n");
 }
 
+// Convertit un caractère saisi en type énuméré Forme
 Forme char_vers_forme(char c) {
     switch(c) {
-        case 'O': return ROND; case 'C': return CARRE; case 'L': return LOSANGE;
-        case 'E': return ETOILE; case 'T': return TREFLE; case 'X': return CROIX;
+        case 'O': return ROND;
+        case 'C': return CARRE;
+        case 'L': return LOSANGE;
+        case 'E': return ETOILE;
+        case 'T': return TREFLE;
+        case 'X': return CROIX;
         default: return VIDE_F;
     }
 }
