@@ -3,7 +3,7 @@
 void lancer_partie() {
     // 1. Configuration du mode de jeu
     int mode = -1;
-    printf("\n--- MODE DE JEU ---\n");
+    printf("\nMode de jeu\n");
     printf("0. Normal (108 tuiles, 3 copies)\n");
     printf("1. Degrade (36 tuiles, 1 copie)\n");
     while (mode != 0 && mode != 1) {
@@ -25,7 +25,7 @@ void lancer_partie() {
     init_plateau(&plateau);
     init_pioche(&pioche, mode);
 
-    printf("\n--- NOMS DES JOUEURS ---\n");
+    printf("\nNoms des joueurs\n");
     for (int i = 0; i < nb_joueurs; i++) {
         printf("Pseudo joueur %d: ", i+1);
         scanf("%s", joueurs[i].pseudo);
@@ -46,14 +46,13 @@ void lancer_partie() {
 
         // Vérification de la condition de fin de partie
         if (est_fin_partie(pioche, joueurs[id])) {
-            printf("\n!!! FIN DE LA PARTIE !!!\n");
+            printf("\nFin de la partie\n");
             joueurs[id].score += 6; // Bonus fin
             partie_en_cours = 0;
             break;
         }
 
-        printf("\n====================================\n");
-        printf("Au tour de %s (Score: %d)\n", joueurs[id].pseudo, joueurs[id].score);
+        printf("\nAu tour de %s (Score: %d)\n", joueurs[id].pseudo, joueurs[id].score);
         printf("Pioche : %d tuiles\n", pioche.nb_restantes);
 
         afficher_plateau(plateau);
@@ -108,7 +107,7 @@ void lancer_partie() {
     }
 
     // Affichage des scores finaux
-    printf("\n=== RESULTATS ===\n");
+    printf("\nResultats\n");
     int max_score = -1;
     int id_gagnant = -1;
 
@@ -119,5 +118,5 @@ void lancer_partie() {
             id_gagnant = i;
         }
     }
-    printf("LE VAINQUEUR EST %s !\n", joueurs[id_gagnant].pseudo);
+    printf("Le vainqueur est %s \n", joueurs[id_gagnant].pseudo);
 }
