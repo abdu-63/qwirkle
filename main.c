@@ -4,27 +4,28 @@ int main() {
     srand(time(NULL)); // aléatoire grâce au temps actuelle
     int choix_menu = 0;
 
+    // Boucle principale du menu
     while (choix_menu != 3) {
         afficher_menu_principal();
 
-        // Sécurisation de la saisie menu
+        // Lecture sécurisée du choix utilisateur
         if (scanf("%d", &choix_menu) != 1) {
-            while(getchar() != '\n');
-            continue;
+            while(getchar() != '\n'); // nettoyage de la mémoire en cas de bug
+            continue; // ignore le switch case et revient au while
         }
 
         switch (choix_menu) {
             case 1:
-                lancer_partie(); // Tout le jeu se passe ici
+                lancer_partie();
                 break;
             case 2:
                 afficher_regles();
                 break;
             case 3:
-                printf("Au revoir !\n");
+                printf("Au revoir\n");
                 break;
             default:
-                printf("Choix invalide.\n");
+                printf("Choix invalide\n");
         }
     }
     return 0;

@@ -1,6 +1,6 @@
 #include "structures.h"
 
-// Fonction utilitaire pour récupérer le char de la forme
+// Convertit l'enum Forme en caractère imprimable
 char get_char_forme(Forme f) {
     switch(f) {
         case ROND: return 'O';
@@ -26,6 +26,11 @@ const char* get_color_code(Couleur c) {
     }
 }
 
+/*
+ Affiche le plateau de jeu sur la console.
+ Utilise des codes couleurs ANSI pour la lisibilité.
+ Affiche les coordonnées (a-z pour colonnes, a-l pour lignes).
+ */
 void afficher_plateau(Plateau p) {
     printf("   ");
     // Affiche les lettres des colonnes (a-z)
@@ -51,6 +56,7 @@ void afficher_plateau(Plateau p) {
     }
 }
 
+// Affiche la main du joueur avec les couleurs et formes.
 void afficher_main(Joueur j) {
     printf("Main de %s : ", j.pseudo);
     for (int i = 0; i < 6; i++) {
@@ -71,25 +77,20 @@ void afficher_regles_saisie() {
 }
 
 void afficher_menu_principal() {
-    printf("\n");
-    printf("**********************************\n");
-    printf("* Q W I R K L E           *\n");
-    printf("**********************************\n");
-    printf("* 1. Nouvelle Partie             *\n");
-    printf("* 2. Regles du jeu               *\n");
-    printf("* 3. Quitter                     *\n");
-    printf("**********************************\n");
+    printf("\nQWIRKLE\n");
+    printf("1. Nouvelle Partie\n");
+    printf("2. Regles du jeu\n");
+    printf("3. Quitter\n");
     printf("Votre choix > ");
 }
 
 void afficher_regles() {
-    printf("\n--- REGLES DU JEU ---\n");
+    printf("\nREGLES DU JEU\n");
     printf("1. Le but est d'aligner des tuiles partageant une caracteristique (Couleur ou Forme).\n");
     printf("2. Une ligne ne peut pas contenir deux tuiles identiques.\n");
     printf("3. Marquez des points egaux a la taille de la ligne creee.\n");
     printf("4. QWIRKLE : Une ligne de 6 tuiles rapporte 6 points bonus !\n");
     printf("5. Fin : Quand la pioche est vide et un joueur n'a plus de tuiles.\n");
-    printf("---------------------\n");
 }
 
 Forme char_vers_forme(char c) {

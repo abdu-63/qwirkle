@@ -11,11 +11,11 @@ void lancer_partie() {
         if (scanf("%d", &mode) != 1) { while(getchar() != '\n'); }
     }
 
-    // 2. Configuration des joueurs
+    // 2. Configuration du nombre de joueurs (2 à 4)
     int nb_joueurs = 0;
     while (nb_joueurs < 2 || nb_joueurs > 4) {
         printf("Nombre de joueurs (2 a 4) > ");
-        if (scanf("%d", &nb_joueurs) != 1) { while(getchar() != '\n'); }
+        if (scanf("%d", &nb_joueurs) != 1) { while(getchar() != '\n'); } // Nettoyage buffer
     }
 
     Plateau plateau;
@@ -34,15 +34,17 @@ void lancer_partie() {
         completer_main(&joueurs[i], &pioche);
     }
 
-    // 3. Boucle de jeu
+    // 3. Boucle principale du jeu
+    // Alterne entre les joueurs jusqu'à la fin de la partie
     int tour = 0;
-    int est_premier = 1;
+    int est_premier = 1; // Marqueur spécial pour le tout premier tour (règles assouplies)
     char buffer[20];
     int partie_en_cours = 1;
 
     while (partie_en_cours) {
-        int id = tour % nb_joueurs;
+        int id = tour % nb_joueurs; // Index du joueur courant (0, 1, 2, ou 3)
 
+        // Vérification de la condition de fin de partie
         if (est_fin_partie(pioche, joueurs[id])) {
             printf("\n!!! FIN DE LA PARTIE !!!\n");
             joueurs[id].score += 6; // Bonus fin
@@ -57,14 +59,18 @@ void lancer_partie() {
         afficher_plateau(plateau);
         afficher_main(joueurs[id]);
 
+        // Demande d'action au joueur
         printf("> (ex: ebC1, echange, fin): ");
         scanf("%s", buffer);
 
+        // Gestion de l'interruption volontaire
         if (strcmp(buffer, "fin") == 0) {
             printf("Partie interrompue.\n");
             return; // Quitte la fonction et revient au menu
         }
 
+        // Gestion de l'action 'echange'
+        // Le joueur échange sa main contre de nouvelles tuiles et passe son tour
         if (strcmp(buffer, "echange") == 0) {
             echanger_tuiles(&joueurs[id], &pioche);
             tour++;
@@ -84,6 +90,8 @@ void lancer_partie() {
             continue;
         }
 
+        // Validation du coup proposé
+        // Vérifie si le coup respecte les règles du Qwirkle
         if (est_coup_valide(plateau, l, c, f, col, est_premier) == 0) continue;
 
         // Action

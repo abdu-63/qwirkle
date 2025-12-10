@@ -4,13 +4,11 @@ int est_dans_plateau(int lig, int col) { // paramètres lignes et colonnes
     return (lig >= 0 && lig < LIGNES && col >= 0 && col < COLONNES);
 }
 
-// PLUS DE POINTEUR (Plateau p)
 int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier_tour) {
     if (!est_dans_plateau(lig, col)) return 0;
 
-    // Utilisation du point '.' car p n'est plus un pointeur
     if (p.grille[lig][col].forme != VIDE_F) {
-        printf("Case occupee !\n");
+        printf("Case occupée\n");
         return 0;
     }
 
@@ -29,11 +27,11 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
                 voisins_trouves++;
                 if (voisin.forme == f || voisin.couleur == c) {
                     if (voisin.forme == f && voisin.couleur == c) {
-                        printf("Doublon interdit !\n");
+                        printf("Doublon interdit\n");
                         return 0;
                     }
                 } else {
-                    printf("Ne correspond pas au voisin !\n");
+                    printf("Ne correspond pas au voisin\n");
                     return 0;
                 }
             }
@@ -42,7 +40,7 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
 
     if (premier_tour) return 1;
     if (voisins_trouves == 0) {
-        printf("Doit toucher une autre tuile !\n");
+        printf("Doit toucher une autre tuile\n");
         return 0;
     }
     return 1;
@@ -63,7 +61,7 @@ int calculer_points(Plateau p, int lig, int col) {
     if (nb_h > 1) {
         points_total += nb_h;
         a_forme_ligne = 1;
-        if (nb_h == 6) { points_total += 6; printf("QWIRKLE !!\n"); }
+        if (nb_h == 6) { points_total += 6; printf("QWIRKLE !\n"); }
     }
 
     // Vertical
@@ -76,7 +74,7 @@ int calculer_points(Plateau p, int lig, int col) {
     if (nb_v > 1) {
         points_total += nb_v;
         a_forme_ligne = 1;
-        if (nb_v == 6) { points_total += 6; printf("QWIRKLE !!\n"); }
+        if (nb_v == 6) { points_total += 6; printf("QWIRKLE !\n"); }
     }
 
     if (a_forme_ligne == 0) points_total = 1;

@@ -6,10 +6,10 @@
 #include <time.h>
 #include <string.h>
 
-#define LIGNES 12
-#define COLONNES 26
+#define LIGNES 12    // Nombre de lignes du plateau de jeu
+#define COLONNES 26  // Nombre de colonnes du plateau de jeu
 
-// Couleurs ANSI
+// couleurs ANSI
 #define COLOR_RED     "\x1b[31m"
 #define COLOR_GREEN   "\x1b[32m"
 #define COLOR_YELLOW  "\x1b[33m"
@@ -18,46 +18,45 @@
 #define COLOR_CYAN    "\x1b[36m"
 #define COLOR_RESET   "\x1b[0m"
 
+// liste de mots-clés qui correspondent à des nombres entiers
 typedef enum { ROUGE, VERT, JAUNE, BLEU, VIOLET, ORANGE, VIDE_C } Couleur;
 typedef enum { ROND, CARRE, LOSANGE, ETOILE, TREFLE, CROIX, VIDE_F } Forme;
 
-typedef struct {
+typedef struct { // structure Tuile pour les formes et les couleurs
     Forme forme;
     Couleur couleur;
 } Tuile;
 
-typedef struct {
+typedef struct { // structure Joueur pour le nom, score, main de 6 tuiles
     char pseudo[50];
     int score;
     Tuile main[6];
 } Joueur;
 
-typedef struct {
+typedef struct { // structure Plateau qui sert pour l'affichage du plateau
     Tuile grille[LIGNES][COLONNES];
 } Plateau;
 
-typedef struct {
-    Tuile tuiles[108]; // Tableau fixe
+typedef struct { // structure Pioche qui gère les tuiles
+    Tuile tuiles[108]; // tableau des tuiles
     int nb_restantes;
-    int mode;
+    int mode; // mode de jeu (0 = normal, 1 = dégradé)
 } Pioche;
 
-// --- PROTOTYPES ---
+// Fonctions qui modifient avec pointeur nécéssaire
+void init_plateau(Plateau *p);                          // Initialise le plateau à vide
+void init_pioche(Pioche *p, int mode_degrade);          // Remplit la pioche et mélange
+void completer_main(Joueur *j, Pioche *p);              // Complète la main du joueur jusqu'à 6 tuiles
+void retirer_tuile_main(Joueur *j, Forme f, Couleur c); // Retire une tuile spécifique de la main
+void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c); // Place une tuile sur le plateau
+void echanger_tuiles(Joueur *j, Pioche *p);             // Echange toute la main avec la pioche
 
-// Fonctions qui MODIFIENT (gardent le pointeur *)
-void init_plateau(Plateau *p);
-void init_pioche(Pioche *p, int mode_degrade);
-void completer_main(Joueur *j, Pioche *p);
-void retirer_tuile_main(Joueur *j, Forme f, Couleur c);
-void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c);
-void echanger_tuiles(Joueur *j, Pioche *p);
-
-// Fonctions en LECTURE SEULE (pas de pointeur *)
-int possede_tuile(Joueur j, Forme f, Couleur c);
-int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier_tour);
-int calculer_points(Plateau p, int lig, int col);
-int est_fin_partie(Pioche p, Joueur j);
-int est_dans_plateau(int lig, int col); // <--- C'EST CETTE LIGNE QUI MANQUAIT !
+// Fonctions en lecture seule
+int possede_tuile(Joueur j, Forme f, Couleur c);        // Vérifie si le joueur a la tuile
+int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier_tour); // Valide un coup selon les règles
+int calculer_points(Plateau p, int lig, int col);       // Calcule les points rapportés par un coup
+int est_fin_partie(Pioche p, Joueur j);                 // Vérifie si la partie est terminée
+int est_dans_plateau(int lig, int col);                 // Vérifie si les coordonnées sont valides
 
 // Affichage et Utilitaires
 void afficher_plateau(Plateau p);
@@ -69,6 +68,6 @@ const char* get_color_code(Couleur c);
 void afficher_menu_principal();
 void afficher_regles();
 
-// --- NOUVEAU : Fonction principale du jeu ---
+// Fonction principale du jeu
 void lancer_partie();
 #endif
