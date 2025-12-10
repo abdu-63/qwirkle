@@ -43,6 +43,16 @@ typedef struct { // structure Pioche qui gère les tuiles
     int mode; // mode de jeu (0 = normal, 1 = dégradé)
 } Pioche;
 
+// Structure de Sauvegarde
+typedef struct {
+    Plateau plateau;
+    Pioche pioche;
+    Joueur joueurs[4];
+    int nb_joueurs;
+    int tour;         // A qui le tour ?
+    int est_premier;  // Est-ce le tout premier tour ?
+} Sauvegarde;
+
 // Fonctions qui modifient avec pointeur nécéssaire
 void init_plateau(Plateau *p); // Initialise le plateau à vide
 void init_pioche(Pioche *p, int mode_degrade); // Remplit la pioche et mélange
@@ -69,5 +79,9 @@ void afficher_menu_principal(); // Affiche le menu principale
 void afficher_regles(); // Affiche les règles
 
 // Fonction principale du jeu qui sert a lancer la partie
-void lancer_partie();
+void lancer_partie(int reprendre);
+
+// Gestion des scores
+void sauvegarder_score(char *pseudo, int score); // Sauvegarde le score
+void lire_scores(); // Lis le score
 #endif

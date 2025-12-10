@@ -80,7 +80,8 @@ void afficher_menu_principal() {
     printf("\nQWIRKLE\n");
     printf("1. Nouvelle Partie\n");
     printf("2. Regles du jeu\n");
-    printf("3. Quitter\n");
+    printf("3. Voir les scores\n");
+    printf("4. Quitter\n");
     printf("Votre choix > ");
 }
 
@@ -104,4 +105,38 @@ Forme char_vers_forme(char c) {
         case 'X': return CROIX;
         default: return VIDE_F;
     }
+}
+
+// Sauvegarde le gagnant dans un fichier texte (mode "append")
+void sauvegarder_score(char *pseudo, int score) {
+    FILE *fichier = fopen("scores.txt", "a"); // "a" pour ajouter à la fin
+    if (fichier != NULL) {
+        // On écrit le nom et le score séparés par un espace
+        fprintf(fichier, "%s %d\n", pseudo, score);
+        fclose(fichier);
+        printf("\n>>> Score sauvegarde dans l'historique ! <<<\n");
+    } else {
+        printf("\nErreur : Impossible de sauvegarder le score.\n");
+    }
+}
+
+// Lit et affiche tout le fichier des scores
+void lire_scores() {
+    FILE *fichier = fopen("scores.txt", "r"); // "r" pour lire
+    char nom[50];
+    int score;
+
+    printf("\nTableau des scores\n");
+    if (fichier == NULL) {
+        printf("Aucun score enregistre pour le moment.\n");
+        return;
+    }
+
+    // On lit tant qu'il y a des lignes (format : string int)
+    while (fscanf(fichier, "%s %d", nom, &score) == 2) {
+        printf("%-15s : %d points\n", nom, score);
+    }
+
+    fclose(fichier);
+    printf("\n");
 }
