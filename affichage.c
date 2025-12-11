@@ -3,26 +3,40 @@
 // Convertit l'enum Forme en caractère imprimable
 char get_char_forme(Forme f) {
     switch(f) {
-        case ROND: return 'O';
-        case CARRE: return 'C';
-        case LOSANGE: return 'L';
-        case ETOILE: return 'E';
-        case TREFLE: return 'T';
-        case CROIX: return 'X';
-        default: return '.';
+        case ROND:
+            return 'O';
+        case CARRE:
+            return 'C';
+        case LOSANGE:
+            return 'L';
+        case ETOILE:
+            return 'E';
+        case TREFLE:
+            return 'T';
+        case CROIX:
+            return 'X';
+        default:
+            return '.';
     }
 }
 
 // Fonction utilitaire pour la couleur
 const char* get_color_code(Couleur c) {
     switch(c) {
-        case ROUGE: return COLOR_RED;
-        case VERT: return COLOR_GREEN;
-        case JAUNE: return COLOR_YELLOW;
-        case BLEU: return COLOR_BLUE;
-        case VIOLET: return COLOR_MAGENTA;
-        case ORANGE: return COLOR_CYAN;
-        default: return COLOR_RESET;
+        case ROUGE:
+            return RED;
+        case VERT:
+            return GRN;
+        case JAUNE:
+            return YEL;
+        case BLEU:
+            return BLU;
+        case VIOLET:
+            return MAG;
+        case ORANGE:
+            return CYN;
+        default:
+            return COLOR_RESET;
     }
 }
 

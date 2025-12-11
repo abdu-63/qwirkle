@@ -10,17 +10,34 @@
 #define COLONNES 26  // Nombre de colonnes du plateau de jeu
 
 // couleurs ANSI
-#define COLOR_RED     "\x1b[31m"
-#define COLOR_GREEN   "\x1b[32m"
-#define COLOR_YELLOW  "\x1b[33m"
-#define COLOR_BLUE    "\x1b[34m"
-#define COLOR_MAGENTA "\x1b[35m"
-#define COLOR_CYAN    "\x1b[36m"
-#define COLOR_RESET   "\x1b[0m"
+#define RED "\e[0;31m"
+#define GRN "\e[0;32m"
+#define YEL "\e[0;33m"
+#define BLU "\e[0;34m"
+#define MAG "\e[0;35m"
+#define CYN "\e[0;36m"
+#define COLOR_RESET "\e[0m"
 
 // liste de mots-clés qui correspondent à des nombres entiers
-typedef enum { ROUGE, VERT, JAUNE, BLEU, VIOLET, ORANGE, VIDE_C } Couleur;
-typedef enum { ROND, CARRE, LOSANGE, ETOILE, TREFLE, CROIX, VIDE_F } Forme;
+typedef enum {
+    ROUGE,
+    VERT,
+    JAUNE,
+    BLEU,
+    VIOLET,
+    ORANGE,
+    VIDE_C
+} Couleur;
+
+typedef enum {
+    ROND,
+    CARRE,
+    LOSANGE,
+    ETOILE,
+    TREFLE,
+    CROIX,
+    VIDE_F
+} Forme;
 
 typedef struct { // structure Tuile pour les formes et les couleurs
     Forme forme;
