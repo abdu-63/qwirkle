@@ -34,7 +34,7 @@ const char* get_color_code(Couleur c) {
         case VIOLET:
             return MAG;
         case ORANGE:
-            return CYN;
+            return WHT;
         default:
             return COLOR_RESET;
     }
