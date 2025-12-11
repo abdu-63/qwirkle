@@ -128,7 +128,7 @@ void sauvegarder_score(char *pseudo, int score) {
         // On écrit le nom et le score séparés par un espace
         fprintf(fichier, "%s %d\n", pseudo, score);
         fclose(fichier);
-        printf("\n>>> Score sauvegarde dans l'historique ! <<<\n");
+        printf("\nScore sauvegarde dans l'historique\n");
     } else {
         printf("\nErreur : Impossible de sauvegarder le score.\n");
     }
