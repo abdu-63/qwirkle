@@ -1,4 +1,8 @@
-#include "structures.h"
+#include "jeu.h"
+#include "plateau.h"
+#include "joueur.h"
+#include "affichage.h"
+#include "regles.h"
 
 // --- Fonctions utilitaires pour la sauvegarde ---
 

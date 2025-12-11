@@ -1,4 +1,4 @@
-#include "structures.h"
+#include "joueur.h"
 
 void init_pioche(Pioche *p, int mode_degrade) {
     p->mode = mode_degrade;

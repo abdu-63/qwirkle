@@ -1,4 +1,4 @@
-#include "structures.h"
+#include "regles.h"
 
 int est_dans_plateau(int lig, int col) { // paramètres lignes et colonnes
     return (lig >= 0 && lig < LIGNES && col >= 0 && col < COLONNES);

@@ -1,4 +1,5 @@
-#include "structures.h"
+#include "jeu.h"
+#include "affichage.h"
 
 int main() {
     srand(time(NULL)); // aléatoire grâce au temps actuelle

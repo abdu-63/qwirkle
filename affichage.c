@@ -1,4 +1,4 @@
-#include "structures.h"
+#include "affichage.h"
 
 // Convertit l'enum Forme en caractère imprimable
 char get_char_forme(Forme f) {

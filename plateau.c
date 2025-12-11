@@ -1,4 +1,5 @@
-#include "structures.h"
+#include "plateau.h"
+#include "regles.h"
 
 // Initialise le plateau en mettant toutes les cases à VIDE
 void init_plateau(Plateau *p) {

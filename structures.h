@@ -70,35 +70,5 @@ typedef struct {
     int est_premier;  // Est-ce le tout premier tour ?
 } Sauvegarde;
 
-// Fonctions qui modifient avec pointeur nécéssaire
-void init_plateau(Plateau *p); // Initialise le plateau à vide
-void init_pioche(Pioche *p, int mode_degrade); // Remplit la pioche et mélange
-void completer_main(Joueur *j, Pioche *p); // Complète la main du joueur jusqu'à 6 tuiles
-void retirer_tuile_main(Joueur *j, Forme f, Couleur c); // Retire une tuile spécifique de la main
-void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c); // Place une tuile sur le plateau
-void echanger_tuiles(Joueur *j, Pioche *p); // Echange toute la main avec la pioche
 
-// Fonctions en lecture seule
-int possede_tuile(Joueur j, Forme f, Couleur c); // Vérifie si le joueur a la tuile
-int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier_tour); // Valide un coup selon les règles
-int calculer_points(Plateau p, int lig, int col); // Calcule les points rapportés par un coup
-int est_fin_partie(Pioche p, Joueur j); // Vérifie si la partie est terminée
-int est_dans_plateau(int lig, int col); // Vérifie si les coordonnées sont valides
-
-// Affichage et Utilitaires
-void afficher_plateau(Plateau p); // Affiche le plateau
-void afficher_main(Joueur j); // Affiche la main
-void afficher_regles_saisie(); // Affiche les règles
-Forme char_vers_forme(char c); // Convertit un caractère saisi en type énuméré Forme
-char get_char_forme(Forme f);
-const char* get_color_code(Couleur c);
-void afficher_menu_principal(); // Affiche le menu principale
-void afficher_regles(); // Affiche les règles
-
-// Fonction principale du jeu qui sert a lancer la partie
-void lancer_partie(int reprendre);
-
-// Gestion des scores
-void sauvegarder_score(char *pseudo, int score); // Sauvegarde le score
-void lire_scores(); // Lis le score
 #endif
