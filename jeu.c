@@ -20,7 +20,7 @@ void effectuer_sauvegarde(Plateau p, Pioche pi, Joueur js[], int nb, int tour, i
 
     fwrite(&s, sizeof(Sauvegarde), 1, f);
     fclose(f);
-    printf("\n>>> PARTIE SAUVEGARDEE AVEC SUCCES ! <<<\n");
+    printf("\nPartie sauvegardée avec succès\n");
 }
 
 int charger_sauvegarde(Plateau *p, Pioche *pi, Joueur js[], int *nb, int *tour, int *prem) {
@@ -44,7 +44,7 @@ int charger_sauvegarde(Plateau *p, Pioche *pi, Joueur js[], int *nb, int *tour, 
     return 1; // Succès
 }
 
-// --- Fonction Principale ---
+// Fonction Principale
 
 void lancer_partie(int reprendre) {
     Plateau plateau;
@@ -61,12 +61,12 @@ void lancer_partie(int reprendre) {
             printf("Retour au menu...\n");
             return;
         }
-        printf("\n>>> Partie chargee ! Au tour de %s <<<\n", joueurs[tour % nb_joueurs].pseudo);
+        printf("\nPartie chargee. Au tour de %s \n", joueurs[tour % nb_joueurs].pseudo);
     }
     else {
         // --- Création nouvelle partie (Code d'avant) ---
         int mode = -1;
-        printf("\n--- MODE DE JEU ---\n");
+        printf("\nMode de jeu\n");
         printf("0. Normal (108 tuiles)\n");
         printf("1. Degrade (36 tuiles)\n");
         while (mode != 0 && mode != 1) {
@@ -82,7 +82,7 @@ void lancer_partie(int reprendre) {
         init_plateau(&plateau);
         init_pioche(&pioche, mode);
 
-        printf("\n--- NOMS DES JOUEURS ---\n");
+        printf("\nNoms des joueurs\n");
         for (int i = 0; i < nb_joueurs; i++) {
             printf("Pseudo joueur %d: ", i+1);
             scanf("%s", joueurs[i].pseudo);
@@ -100,7 +100,7 @@ void lancer_partie(int reprendre) {
         int id = tour % nb_joueurs;
 
         if (est_fin_partie(pioche, joueurs[id])) {
-            printf("\n!!! FIN DE LA PARTIE !!!\n");
+            printf("\nfin de la partie\n");
             joueurs[id].score += 6;
             partie_en_cours = 0;
             break;
@@ -112,7 +112,7 @@ void lancer_partie(int reprendre) {
         afficher_plateau(plateau);
         afficher_main(joueurs[id]);
 
-        printf("> (ex: ebC1, echange, sauver, fin): ");
+        printf(" (ex: ebC1, echange, sauver, fin): ");
         scanf("%s", buffer);
 
         // --- COMMANDES SPECIALES ---
@@ -167,7 +167,7 @@ void lancer_partie(int reprendre) {
         retirer_tuile_main(&joueurs[id], f, col);
         completer_main(&joueurs[id], &pioche);
 
-        printf(">>> Points marques : %d\n", pts);
+        printf("Points marques : %d\n", pts);
         est_premier = 0;
         tour++;
     }
@@ -183,7 +183,7 @@ void lancer_partie(int reprendre) {
             id_gagnant = i;
         }
     }
-    printf("LE VAINQUEUR EST %s !\n", joueurs[id_gagnant].pseudo);
+    printf("Le vainqueur est %s !\n", joueurs[id_gagnant].pseudo);
     sauvegarder_score(joueurs[id_gagnant].pseudo, joueurs[id_gagnant].score);
 
     // Optionnel : Supprimer le fichier de sauvegarde quand la partie est finie proprement
