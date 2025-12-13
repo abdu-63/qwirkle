@@ -5,14 +5,14 @@ int main() {
     srand(time(NULL)); // aléatoire grâce au temps actuelle
     int choix_menu = 0;
 
-    while (choix_menu != 5) { // On passe à 5 options
+    while (choix_menu != 5) {
         printf("\nQWIRKLE\n");
         printf("1. Nouvelle Partie\n");
-        printf("2. Reprendre partie\n"); // NOUVEAU
+        printf("2. Reprendre partie\n");
         printf("3. Regles du jeu\n");
         printf("4. Voir les scores\n");
         printf("5. Quitter\n");
-        printf("Votre choix > ");
+        printf("Votre choix : ");
 
         if (scanf("%d", &choix_menu) != 1) {
             while(getchar() != '\n'); // nettoyage de la mémoire en cas de bug
@@ -21,10 +21,10 @@ int main() {
 
         switch (choix_menu) {
             case 1:
-                lancer_partie(0); // 0 = Nouvelle partie
+                lancer_partie(0);
                 break;
             case 2:
-                lancer_partie(1); // 1 = Reprendre sauvegarde
+                lancer_partie(1);
                 break;
             case 3:
                 afficher_regles();
@@ -33,10 +33,10 @@ int main() {
                 lire_scores();
                 break;
             case 5:
-                printf("Au revoir !\n");
+                printf("Au revoir\n");
                 break;
             default:
-                printf("Choix invalide.\n");
+                printf("Choix invalide\n");
         }
     }
     return 0;

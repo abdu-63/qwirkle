@@ -6,10 +6,11 @@
 #include <time.h>
 #include <string.h>
 
-#define LIGNES 12    // Nombre de lignes du plateau de jeu
-#define COLONNES 26  // Nombre de colonnes du plateau de jeu
+// nombre de lignes et colonnes du plateau de jeu
+#define LIGNES 12
+#define COLONNES 26
 
-// couleurs ANSI
+// couleurs ANSI (https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a)
 #define RED "\e[0;31m"
 #define GRN "\e[0;32m"
 #define YEL "\e[0;33m"
@@ -18,8 +19,8 @@
 #define WHT "\e[0;37m"
 #define COLOR_RESET "\e[0m"
 
-// liste de mots-clés qui correspondent à des nombres entiers
-typedef enum {
+// liste de mots-clés qui correspondent à des nombres entiers (permet de mettre des mots sur les nombres)
+typedef enum { // liste de couleurs
     ROUGE,
     VERT,
     JAUNE,
@@ -29,7 +30,7 @@ typedef enum {
     VIDE_C
 } Couleur;
 
-typedef enum {
+typedef enum { // liste de formes
     ROND,
     CARRE,
     LOSANGE,
@@ -55,19 +56,19 @@ typedef struct { // structure Plateau qui sert pour l'affichage du plateau
 } Plateau;
 
 typedef struct { // structure Pioche qui gère les tuiles
-    Tuile tuiles[108]; // tableau des tuiles
+    Tuile tuiles[108]; // tableau du nombre de tuiles
     int nb_restantes;
     int mode; // mode de jeu (0 = normal, 1 = dégradé)
 } Pioche;
 
-// Structure de Sauvegarde
+// structure de Sauvegarde
 typedef struct {
     Plateau plateau;
     Pioche pioche;
     Joueur joueurs[4];
     int nb_joueurs;
-    int tour;         // A qui le tour ?
-    int est_premier;  // Est-ce le tout premier tour ?
+    int tour; // A qui est le tour
+    int est_premier; // si premier tour ou pas
 } Sauvegarde;
 
 
