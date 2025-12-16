@@ -3,7 +3,7 @@
 
 #include "structures.h"
 
-void init_plateau(Plateau *p); // initialise le plateau en mettant toutes les cases à vide
-void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c); // place une tuile sur la grille grâce aux coordonnées
+void init_plateau(Plateau *p);
+void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c);
 
 #endif // PLATEAU_H

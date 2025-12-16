@@ -11,7 +11,6 @@ void init_plateau(Plateau *p) {
     }
 }
 
-// place une tuile sur la grille grâce aux coordonnées
 void poser_tuile(Plateau *p, int lig, int col, Forme f, Couleur c) {
     if (est_dans_plateau(lig, col)) {
         p->grille[lig][col].forme = f;
