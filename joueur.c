@@ -61,30 +61,26 @@ void retirer_tuile_main(Joueur *j, Forme f, Couleur c) {
     }
 }
 
-// échange les tuiles de la main du joueur avec la pioche
 void echanger_tuiles(Joueur *j, Pioche *p) {
-    // test si la pioche existe
-    if (p->nb_restantes == 0) {
+    if (p->nb_restantes == 0) { // test si pioche vide avant d'échanger
         printf("Pioche vide\n");
         return;
     }
-    printf("Indices des tuiles a echanger (1-6), tapez 0 pour finir :\n");
+    printf("Tapez la tuile à échanger (1-6) et tapez 0 pour finir :\n");
     int choix;
     int nb_echanges = 0;
-
-    // boucle de sélection des tuiles à échanger
     while (1) {
         printf(": ");
-        if (scanf("%d", &choix) != 1) {
-            while(getchar() != '\n') {} // nettoyage buffer
+        if (scanf("%d", &choix) != 1) { // lis et test si l'utilisateur tape une erreur ex: bonjour au lieu de 1
+            while(getchar() != '\n'); // corrige l'érreur en supprimant bonjour et redemande pour pas crash
             continue;
         }
-        if (choix == 0) break;
+        if (choix == 0)
+            break;
         if (choix >= 1 && choix <= 6) {
             int idx = choix - 1;
             if (j->main[idx].forme != VIDE_F) {
-                // remet la tuile dans la pioche
-                p->tuiles[p->nb_restantes] = j->main[idx];
+                p->tuiles[p->nb_restantes] = j->main[idx]; // remet la tuile dans la pioche
                 p->nb_restantes++;
                 // marque l'emplacement en main comme vide
                 j->main[idx].forme = VIDE_F;
@@ -93,16 +89,14 @@ void echanger_tuiles(Joueur *j, Pioche *p) {
             }
         }
     }
-
-    // si échange on re mélange la pioche et on complète la main
     if (nb_echanges > 0) {
         for (int i = 0; i < p->nb_restantes; i++) {
-            int r = rand() % p->nb_restantes;
+            int r = rand() % p->nb_restantes;  // re mélange la pioche
             Tuile temp = p->tuiles[i];
             p->tuiles[i] = p->tuiles[r];
             p->tuiles[r] = temp;
         }
-        completer_main(j, p); // pioche les nouvelles tuiles
-        printf("%d tuiles echangees.\n", nb_echanges);
+        completer_main(j, p);
+        printf("%d tuiles échangées.\n", nb_echanges);
     }
 }
