@@ -43,55 +43,6 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
     return 1;
 }
 
-int calculer_points(Plateau p, int lig, int col) {
-    int points_total = 0;
-    int a_forme_ligne = 0; // savoir si la tuile a étendu une ligne
-
-    int nb_h = 1;
-    int c_scan = col - 1;
-    // cherche jusqu'a trouver une tuile
-    while (c_scan >= 0 && p.grille[lig][c_scan].forme != VIDE_F) { // scan à gauche
-        nb_h++;
-        c_scan--;
-    }
-    c_scan = col + 1;
-    while (c_scan < COLONNES && p.grille[lig][c_scan].forme != VIDE_F) { // scan à droite
-        nb_h++;
-        c_scan++;
-    }
-    if (nb_h > 1) { // test si la ligne à + d'une tuile
-        points_total += nb_h; // ajout de la longeur au score
-        a_forme_ligne = 1; // ligne formé
-        if (nb_h == 6) {
-            points_total += 6; printf("QWIRKLE !\n");
-        }
-    }
-
-    int nb_v = 1;
-    int l_scan = lig - 1;
-    // cherche jusqu'a trouver une tuile (idem que en haut mais pour les lignes)
-    while (l_scan >= 0 && p.grille[l_scan][col].forme != VIDE_F) { // scan à gauche
-        nb_v++;
-        l_scan--;
-    }
-    l_scan = lig + 1;
-    while (l_scan < LIGNES && p.grille[l_scan][col].forme != VIDE_F) { // scan à droite
-        nb_v++;
-        l_scan++;
-    }
-    if (nb_v > 1) { // test si la ligne à + d'une tuile
-        points_total += nb_v; // ajout de la longeur au score
-        a_forme_ligne = 1; // ligne formé
-        if (nb_v == 6) {
-            points_total += 6; printf("QWIRKLE !\n");
-        }
-    }
-    // test si la tuile est isolée elle vaut 1 point (pour le début)
-    if (a_forme_ligne == 0)
-        points_total = 1;
-    return points_total;
-}
-
 int est_fin_partie(Pioche p, Joueur j) {
     if (p.nb_restantes > 0) return 0;
     for (int i = 0; i < 6; i++) {
