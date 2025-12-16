@@ -1,6 +1,6 @@
 #include "joueur.h"
 
-// initialise la pioche avec toutes les tuiles
+// initialise la pioche avec toutes les combinaison des tuiles par rapport au mode choisie
 void init_pioche(Pioche *p, int mode_degrade) {
     p->mode = mode_degrade;
     int nb_copies;
@@ -9,14 +9,12 @@ void init_pioche(Pioche *p, int mode_degrade) {
     } else {
         nb_copies = 3;
     }
-    
-    p->nb_restantes = nb_copies * 6 * 6; // 6 formes * 6 couleurs * nb_copies
+    p->nb_restantes = nb_copies * 6 * 6; // nombre de tuiles dans la pioche
 
     int index = 0;
-    // génération des tuiles
-    for (int c = 0; c < 6; c++) {
-        for (int f = 0; f < 6; f++) {
-            for (int k = 0; k < nb_copies; k++) {
+    for (int c = 0; c < 6; c++) { // couleurs
+        for (int f = 0; f < 6; f++) { // formes
+            for (int k = 0; k < nb_copies; k++) { // copies (modes)
                 p->tuiles[index].couleur = (Couleur)c;
                 p->tuiles[index].forme = (Forme)f;
                 index++;
@@ -24,7 +22,7 @@ void init_pioche(Pioche *p, int mode_degrade) {
         }
     }
 
-    // mélange pour randomiser la pioche
+    // mélange de "Fisher-Yates"
     for (int i = p->nb_restantes - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         Tuile temp = p->tuiles[i];
@@ -33,11 +31,9 @@ void init_pioche(Pioche *p, int mode_degrade) {
     }
 }
 
-// ajoute une tuile dans la main après la pose de tuile
 void completer_main(Joueur *j, Pioche *p) {
     for (int i = 0; i < 6; i++) {
-        // si l'emplacement est vide VIDE_F on pioche
-        if (j->main[i].forme == VIDE_F) {
+        if (j->main[i].forme == VIDE_F) { // test si l'emplacement de la main est vide
             if (p->nb_restantes > 0) {
                 p->nb_restantes--;
                 j->main[i] = p->tuiles[p->nb_restantes];
@@ -46,8 +42,7 @@ void completer_main(Joueur *j, Pioche *p) {
     }
 }
 
-// vérifie que le joueur peut changer de tuile si il n'en a pas besoin
-int possede_tuile(Joueur j, Forme f, Couleur c) {
+int possede_tuile(Joueur j, Forme f, Couleur c) { // vérifie que le joueur a la tuile avant de la poser
     for (int i = 0; i < 6; i++) {
         if (j.main[i].forme == f && j.main[i].couleur == c) {
             return 1;
@@ -56,7 +51,6 @@ int possede_tuile(Joueur j, Forme f, Couleur c) {
     return 0;
 }
 
-// retire une tuile spécifique de la main du joueur
 void retirer_tuile_main(Joueur *j, Forme f, Couleur c) {
     for (int i = 0; i < 6; i++) {
         if (j->main[i].forme == f && j->main[i].couleur == c) {
