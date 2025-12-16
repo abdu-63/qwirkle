@@ -61,9 +61,15 @@ int calculer_points(Plateau p, int lig, int col) {
     // comptage horizontal (Gauche + Droite)
     int nb_h = 1;
     int c_scan = col - 1;
-    while (c_scan >= 0 && p.grille[lig][c_scan].forme != VIDE_F) { nb_h++; c_scan--; }
+    while (c_scan >= 0 && p.grille[lig][c_scan].forme != VIDE_F) {
+        nb_h++;
+        c_scan--;
+    }
     c_scan = col + 1;
-    while (c_scan < COLONNES && p.grille[lig][c_scan].forme != VIDE_F) { nb_h++; c_scan++; }
+    while (c_scan < COLONNES && p.grille[lig][c_scan].forme != VIDE_F) {
+        nb_h++;
+        c_scan++;
+    }
 
     if (nb_h > 1) {
         points_total += nb_h;
@@ -74,9 +80,15 @@ int calculer_points(Plateau p, int lig, int col) {
     // comptage vertical (Haut + Bas)
     int nb_v = 1;
     int l_scan = lig - 1;
-    while (l_scan >= 0 && p.grille[l_scan][col].forme != VIDE_F) { nb_v++; l_scan--; }
+    while (l_scan >= 0 && p.grille[l_scan][col].forme != VIDE_F) {
+        nb_v++;
+        l_scan--;
+    }
     l_scan = lig + 1;
-    while (l_scan < LIGNES && p.grille[l_scan][col].forme != VIDE_F) { nb_v++; l_scan++; }
+    while (l_scan < LIGNES && p.grille[l_scan][col].forme != VIDE_F) {
+        nb_v++;
+        l_scan++;
+    }
 
     if (nb_v > 1) {
         points_total += nb_v;
@@ -165,24 +177,36 @@ int calculer_score_serie_coups(Plateau p, Coup coups[], int n) {
     if (main_ligne) {
         int nb_h = 1;
         int c_scan = c_ref - 1;
-        while (c_scan >= 0 && temp.grille[l_ref][c_scan].forme != VIDE_F) { nb_h++; c_scan--; }
+        while (c_scan >= 0 && temp.grille[l_ref][c_scan].forme != VIDE_F) {
+            nb_h++;
+            c_scan--;
+        }
         c_scan = c_ref + 1;
-        while (c_scan < COLONNES && temp.grille[l_ref][c_scan].forme != VIDE_F) { nb_h++; c_scan++; }
+        while (c_scan < COLONNES && temp.grille[l_ref][c_scan].forme != VIDE_F) {
+            nb_h++;
+            c_scan++;
+        }
         
         if (nb_h > 1) {
             main_axis_score += nb_h;
-            if (nb_h == 6) { main_axis_score += 6; printf("QWIRKLE (Ligne) !\n"); }
+            if (nb_h == 6) { main_axis_score += 6; printf("QWIRKLE (Ligne)\n"); }
         }
     } else {
-         int nb_v = 1;
+        int nb_v = 1;
         int l_scan = l_ref - 1;
-        while (l_scan >= 0 && temp.grille[l_scan][c_ref].forme != VIDE_F) { nb_v++; l_scan--; }
+        while (l_scan >= 0 && temp.grille[l_scan][c_ref].forme != VIDE_F) {
+            nb_v++;
+            l_scan--;
+        }
         l_scan = l_ref + 1;
-        while (l_scan < LIGNES && temp.grille[l_scan][c_ref].forme != VIDE_F) { nb_v++; l_scan++; }
+        while (l_scan < LIGNES && temp.grille[l_scan][c_ref].forme != VIDE_F) {
+            nb_v++;
+            l_scan++;
+        }
         
         if (nb_v > 1) {
             main_axis_score += nb_v;
-            if (nb_v == 6) { main_axis_score += 6; printf("QWIRKLE (Colonne) !\n"); }
+            if (nb_v == 6) { main_axis_score += 6; printf("QWIRKLE (Colonne)\n"); }
         }
     }
     points_total += main_axis_score;
@@ -197,21 +221,33 @@ int calculer_score_serie_coups(Plateau p, Coup coups[], int n) {
             // Axe secondaire = Vertical
             int nb_v = 1;
             int l_scan = l - 1;
-            while (l_scan >= 0 && temp.grille[l_scan][c].forme != VIDE_F) { nb_v++; l_scan--; }
+            while (l_scan >= 0 && temp.grille[l_scan][c].forme != VIDE_F) {
+                nb_v++;
+                l_scan--;
+            }
             l_scan = l + 1;
-            while (l_scan < LIGNES && temp.grille[l_scan][c].forme != VIDE_F) { nb_v++; l_scan++; }
+            while (l_scan < LIGNES && temp.grille[l_scan][c].forme != VIDE_F) {
+                nb_v++;
+                l_scan++;
+            }
             
             if (nb_v > 1) {
                 cross_score += nb_v;
-                if (nb_v == 6) { cross_score += 6; printf("QWIRKLE (Croix) !\n"); }
+                if (nb_v == 6) { cross_score += 6; printf("QWIRKLE (Croix)\n"); }
             }
         } else {
             // Axe secondaire = Horizontal
             int nb_h = 1;
             int c_scan = c - 1;
-            while (c_scan >= 0 && temp.grille[l][c_scan].forme != VIDE_F) { nb_h++; c_scan--; }
+            while (c_scan >= 0 && temp.grille[l][c_scan].forme != VIDE_F) {
+                nb_h++;
+                c_scan--;
+            }
             c_scan = c + 1;
-            while (c_scan < COLONNES && temp.grille[l][c_scan].forme != VIDE_F) { nb_h++; c_scan++; }
+            while (c_scan < COLONNES && temp.grille[l][c_scan].forme != VIDE_F) {
+                nb_h++;
+                c_scan++;
+            }
             
             if (nb_h > 1) {
                 cross_score += nb_h;

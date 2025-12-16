@@ -15,8 +15,9 @@ void effectuer_sauvegarde(Plateau p, Pioche pi, Joueur js[], int nb, int tour, i
     Sauvegarde s;
     s.plateau = p;
     s.pioche = pi;
-    // Copie des joueurs
-    for(int i=0; i<4; i++) s.joueurs[i] = js[i];
+    for (int i = 0; i < 4; i++) {
+        s.joueurs[i] = js[i];
+    }
     s.nb_joueurs = nb;
     s.tour = tour;
     s.est_premier = prem;
@@ -39,7 +40,9 @@ int charger_sauvegarde(Plateau *p, Pioche *pi, Joueur js[], int *nb, int *tour, 
 
     *p = s.plateau;
     *pi = s.pioche;
-    for(int i=0; i<4; i++) js[i] = s.joueurs[i];
+    for (int i = 0; i < 4; i++) {
+        js[i] = s.joueurs[i];
+    }
     *nb = s.nb_joueurs;
     *tour = s.tour;
     *prem = s.est_premier;
@@ -93,7 +96,9 @@ void lancer_partie(int reprendre) {
             printf("Pseudo joueur %d: ", i+1);
             scanf("%s", joueurs[i].pseudo);
             joueurs[i].score = 0;
-            for(int k=0; k<6; k++) joueurs[i].main[k].forme = VIDE_F;
+            for (int k = 0; k < 6; k++) {
+                joueurs[i].main[k].forme = VIDE_F;
+            }
             completer_main(&joueurs[i], &pioche);
         }
     }
@@ -185,11 +190,15 @@ void lancer_partie(int reprendre) {
                 est_premier = 0;
                 tour++;
                 nb_coups_en_cours = 0;
-                for(int k=0; k<6; k++) tuiles_utilisees[k] = 0;
+                for (int k = 0; k < 6; k++) {
+                    tuiles_utilisees[k] = 0;
+                }
             } else {
                  printf("Série de coups invalide, coups annulés\n");
                  nb_coups_en_cours = 0;
-                 for(int k=0; k<6; k++) tuiles_utilisees[k] = 0;
+                 for (int k = 0; k < 6; k++) {
+                     tuiles_utilisees[k] = 0;
+                 }
             }
             continue;
         }
