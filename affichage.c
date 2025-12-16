@@ -108,17 +108,17 @@ void afficher_regles() {
 // convertit un caractère saisi par le joueur en type énuméré forme pour indiquer la forme de la tuile
 Forme char_vers_forme(char c) {
     switch(c) {
-        case 'O':
+        case 'O': case 'o':
             return ROND;
-        case 'C':
+        case 'C': case 'c':
             return CARRE;
-        case 'L':
+        case 'L': case 'l':
             return LOSANGE;
-        case 'E':
+        case 'E': case 'e':
             return ETOILE;
-        case 'T':
+        case 'T': case 't':
             return TREFLE;
-        case 'X':
+        case 'X': case 'x':
             return CROIX;
         default:
             return VIDE_F;
@@ -144,7 +144,7 @@ void lire_scores() {
     char nom[50];
     int score;
 
-    printf("\nTableau des scores\n");
+    printf("\nHistorique des scores\n");
     if (fichier == NULL) {
         printf("Aucun score pour le moment\n");
         return;
@@ -156,5 +156,79 @@ void lire_scores() {
     }
 
     fclose(fichier);
+    printf("\n");
+}
+
+// sauvegarde les scores de la dernière partie (tous les joueurs)
+void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs) {
+    FILE *fichier = fopen("derniere_partie.txt", "w"); // "w" pour écraser
+    if (fichier != NULL) {
+        for (int i = 0; i < nb_joueurs; i++) {
+            fprintf(fichier, "%s %d\n", joueurs[i].pseudo, joueurs[i].score);
+        }
+        fclose(fichier);
+    }
+}
+
+// affiche les scores de la dernière partie
+void lire_derniere_partie() {
+    FILE *fichier = fopen("derniere_partie.txt", "r");
+    char nom[50];
+    int score;
+
+    printf("\nScores de la dernière partie\n");
+    if (fichier == NULL) {
+        printf("Aucune partie jouée récemment\n");
+        return;
+    }
+
+    while (fscanf(fichier, "%s %d", nom, &score) == 2) {
+        printf("%-15s : %d points\n", nom, score);
+    }
+
+    fclose(fichier);
+    printf("\n");
+}
+
+// affiche les meilleurs scores (triés du plus grand au plus petit)
+void lire_meilleurs_scores() {
+    FILE *fichier = fopen("scores.txt", "r");
+    char noms[100][50];
+    int scores[100];
+    int nb = 0;
+
+    printf("\nMeilleurs scores (Top 10)\n");
+    if (fichier == NULL) {
+        printf("Aucun score pour le moment\n");
+        return;
+    }
+
+    // Lire tous les scores
+    while (nb < 100 && fscanf(fichier, "%s %d", noms[nb], &scores[nb]) == 2) {
+        nb++;
+    }
+    fclose(fichier);
+
+    // Tri par insertion (du plus grand au plus petit)
+    for (int i = 1; i < nb; i++) {
+        int score_temp = scores[i];
+        char nom_temp[50];
+        for (int k = 0; k < 50; k++) nom_temp[k] = noms[i][k];
+        
+        int j = i - 1;
+        while (j >= 0 && scores[j] < score_temp) {
+            scores[j + 1] = scores[j];
+            for (int k = 0; k < 50; k++) noms[j + 1][k] = noms[j][k];
+            j--;
+        }
+        scores[j + 1] = score_temp;
+        for (int k = 0; k < 50; k++) noms[j + 1][k] = nom_temp[k];
+    }
+
+    // Afficher les 10 meilleurs
+    int afficher = (nb < 10) ? nb : 10;
+    for (int i = 0; i < afficher; i++) {
+        printf("%d. %-15s : %d points\n", i + 1, noms[i], scores[i]);
+    }
     printf("\n");
 }

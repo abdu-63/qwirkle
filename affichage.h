@@ -13,5 +13,8 @@ char get_char_forme(Forme f); // convertit l'enum forme en caractère imprimable
 const char* get_color_code(Couleur c); // fonction pour la couleur
 void sauvegarder_score(char *pseudo, int score); // sauvegarde le score
 void lire_scores(); // lis le score
+void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs); // sauvegarde la dernière partie
+void lire_derniere_partie(); // affiche la dernière partie
+void lire_meilleurs_scores(); // affiche les meilleurs scores triés
 
 #endif // AFFICHAGE_H

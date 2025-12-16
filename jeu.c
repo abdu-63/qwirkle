@@ -101,6 +101,12 @@ void lancer_partie(int reprendre) {
     // boucle qui fait tourner le jeu
     char buffer[20];
     int partie_en_cours = 1;
+    
+    // variables pour le multi-coup
+    Coup coups_en_cours[6];
+    int nb_coups_en_cours = 0;
+    int tuiles_utilisees[6] = {0};
+
 
     // si la partie est en cours
     while (partie_en_cours) {
@@ -114,23 +120,21 @@ void lancer_partie(int reprendre) {
             break;
         }
 
-        // affiche la pioche et les pseudo des joueurs
-        printf("\nAu tour de %s (Score: %d)\n", joueurs[id].pseudo, joueurs[id].score);
-        printf("Pioche : %d tuiles\n", pioche.nb_restantes);
-
-        // afficher maintenant le plateau et la main initialisé plus tôt
-        afficher_plateau(plateau);
-        afficher_main(joueurs[id]);
-
-        printf(" (ex: ebC1, échange, sauver, fin): ");
+        // Afficher seulement si aucun coup en cours
+        if (nb_coups_en_cours == 0) {
+            printf("\nAu tour de %s (Score: %d)\n", joueurs[id].pseudo, joueurs[id].score);
+            printf("Pioche : %d tuiles\n", pioche.nb_restantes);
+            afficher_plateau(plateau);
+            afficher_main(joueurs[id]);
+            printf(" (ex: ebC1, valider, échange, sauver, fin): ");
+        } else {
+            printf("Coup suivant : ");
+        }
         scanf("%s", buffer);
 
-        // commandes autres que placer la tuile
-        // commande "fin" quitte la partie
         if (strcmp(buffer, "fin") == 0) {
             printf("Partie interrompue\n");
-            // Sauvegarde du score (votre code précédent)
-             int max_temp = -1;
+            int max_temp = -1;
             int id_temp = -1;
             for(int i=0; i < nb_joueurs; i++) {
                 if (joueurs[i].score > max_temp) {
@@ -142,50 +146,92 @@ void lancer_partie(int reprendre) {
             return;
         }
 
-        // commande "sauver" sauvegarde l'état actuel
         if (strcmp(buffer, "sauver") == 0) {
             effectuer_sauvegarde(plateau, pioche, joueurs, nb_joueurs, tour, est_premier);
-            continue; // reste au même tour
+            continue; 
         }
 
-        // commande "echange" échange les tuiles avec ceux de la pioche
         if (strcmp(buffer, "échange") == 0) {
+            if (nb_coups_en_cours > 0) {
+                printf("Veuillez valider vos coups avant d'echanger\n");
+                continue;
+            }
             echanger_tuiles(&joueurs[id], &pioche);
             tour++;
             continue;
         }
 
-        if (strlen(buffer) < 4) continue;
-        // conversion de la saisie "ebC1" en indices et types
-        int l = buffer[0] - 'a'; // pour la ligne (lettre -> 0-11)
-        int c = buffer[1] - 'a'; // pour la colonne (lettre -> 0-25)
-        Forme f = char_vers_forme(buffer[2]); // pour la forme (lettre -> enum)
-        Couleur col = buffer[3] - '0'; // pour la couleur (char '0'-'5' -> int)
 
-        // vérification de la saisie
-        if (f == VIDE_F || col < 0 || col > 5) continue;
+        if (strcmp(buffer, "valider") == 0 || strcmp(buffer, "jouer") == 0) {
+            if (nb_coups_en_cours == 0) {
+                printf("Aucun coup à jouer\n");
+                continue;
+            }
 
-        // vérifie si le joueur possède bien la tuile
-        if (possede_tuile(joueurs[id], f, col) == 0) {
-            printf("Tuile non possedée\n");
+            if (valider_serie_coups(plateau, coups_en_cours, nb_coups_en_cours, est_premier)) {
+                // calcul score
+                int pts = calculer_score_serie_coups(plateau, coups_en_cours, nb_coups_en_cours);
+                joueurs[id].score += pts;
+                printf("Points marques : %d (Total: %d)\n", pts, joueurs[id].score);
+
+                // appliquer sur le vrai plateau et retirer de la main
+                for (int k = 0; k < nb_coups_en_cours; k++) {
+                    poser_tuile(&plateau, coups_en_cours[k].lig, coups_en_cours[k].col, coups_en_cours[k].forme, coups_en_cours[k].couleur);
+                    retirer_tuile_main(&joueurs[id], coups_en_cours[k].forme, coups_en_cours[k].couleur);
+                }
+                
+                completer_main(&joueurs[id], &pioche);
+                est_premier = 0;
+                tour++;
+                nb_coups_en_cours = 0;
+                for(int k=0; k<6; k++) tuiles_utilisees[k] = 0;
+            } else {
+                 printf("Série de coups invalide, coups annulés\n");
+                 nb_coups_en_cours = 0;
+                 for(int k=0; k<6; k++) tuiles_utilisees[k] = 0;
+            }
             continue;
         }
 
-        // vérifie si le coup est légal selon les règles
-        if (est_coup_valide(plateau, l, c, f, col, est_premier) == 0) continue;
+        if (strlen(buffer) < 4) continue;
+        
+        // Traitement d'un coup (ajout à la liste)
+        if (nb_coups_en_cours >= 6) {
+            printf("Max 6 tuiles par tour !\n");
+            continue;
+        }
 
-        // application du coup et des points
-        poser_tuile(&plateau, l, c, f, col);
-        int pts = calculer_points(plateau, l, c);
-        joueurs[id].score += pts;
+        int l = buffer[0] - 'a'; 
+        int c = buffer[1] - 'a'; 
+        Forme f = char_vers_forme(buffer[2]); 
+        Couleur col = buffer[3] - '0'; 
 
-        // mise à jour de la main et passage au tour suivant
-        retirer_tuile_main(&joueurs[id], f, col);
-        completer_main(&joueurs[id], &pioche);
+        if (f == VIDE_F || col < 0 || col > 5) continue;
 
-        printf("Points marques : %d\n", pts);
-        est_premier = 0;
-        tour++;
+        // Vérifier possession (en tenant compte de tuiles_utilisees)
+        int index_trouve = -1;
+        for (int k=0; k<6; k++) {
+            if (!tuiles_utilisees[k] && joueurs[id].main[k].forme == f && joueurs[id].main[k].couleur == col) {
+                index_trouve = k;
+                break;
+            }
+        }
+
+        if (index_trouve == -1) {
+            printf("%s: Tuile non possedée (ou déjà utilisée ce tour)\n", buffer);
+            continue;
+        }
+
+        // Ajout à la liste
+        coups_en_cours[nb_coups_en_cours].lig = l;
+        coups_en_cours[nb_coups_en_cours].col = c;
+        coups_en_cours[nb_coups_en_cours].forme = f;
+        coups_en_cours[nb_coups_en_cours].couleur = col;
+        
+        tuiles_utilisees[index_trouve] = 1;
+        nb_coups_en_cours++;
+        printf("%s: Coup ajoutée \n", buffer);
+
     }
 
     // calcul gagnant après la fin
@@ -201,6 +247,7 @@ void lancer_partie(int reprendre) {
     }
     // affiche le gagnant
     printf("Le vainqueur est %s !\n", joueurs[id_gagnant].pseudo);
+    sauvegarder_derniere_partie(joueurs, nb_joueurs);
     sauvegarder_score(joueurs[id_gagnant].pseudo, joueurs[id_gagnant].score);
 
     // supprimer le fichier de sauvegarde quand la partie est finie proprement pour pas poser de soucis a la prochaine fois

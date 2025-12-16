@@ -29,9 +29,19 @@ int main() {
             case 3:
                 afficher_regles();
                 break;
-            case 4:
-                lire_scores();
+            case 4: {
+                int choix_score = 0;
+                printf("\n1. Meilleurs scores (Top 10)\n");
+                printf("2. Dernière partie\n");
+                printf("3. Historique complet\n");
+                printf("Choix : ");
+                if (scanf("%d", &choix_score) == 1) {
+                    if (choix_score == 1) lire_meilleurs_scores();
+                    else if (choix_score == 2) lire_derniere_partie();
+                    else if (choix_score == 3) lire_scores();
+                }
                 break;
+            }
             case 5:
                 printf("Au revoir\n");
                 break;

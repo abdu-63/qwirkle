@@ -61,6 +61,13 @@ typedef struct { // structure Pioche qui gère les tuiles
     int mode; // mode de jeu (0 = normal, 1 = dégradé)
 } Pioche;
 
+typedef struct { // structure Coup pour les coordonnées et les formes et couleurs
+    int lig;
+    int col;
+    Forme forme;
+    Couleur couleur;
+} Coup;
+
 // structure de Sauvegarde
 typedef struct {
     Plateau plateau;
