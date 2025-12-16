@@ -142,6 +142,7 @@ void lancer_partie(int reprendre) {
                     id_temp = i;
                 }
             }
+            sauvegarder_derniere_partie(joueurs, nb_joueurs);
             if (id_temp != -1) sauvegarder_score(joueurs[id_temp].pseudo, joueurs[id_temp].score);
             return;
         }

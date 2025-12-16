@@ -120,8 +120,14 @@ int valider_serie_coups(Plateau p, Coup coups[], int n, int premier_tour) {
 
     // Simulation sur un plateau temporaire
     Plateau temp = p;
-    for (int i = 0; i < n; i++) {        
-        int est_premier_eff = (i == 0) ? premier_tour : 0;
+    for (int i = 0; i < n; i++) {
+        int est_premier_eff;
+        if (i == 0) {
+            est_premier_eff = premier_tour;
+        } else {
+            est_premier_eff = 0;
+        }
+        
         if (!est_coup_valide(temp, coups[i].lig, coups[i].col, coups[i].forme, coups[i].couleur, est_premier_eff)) {
             return 0;
         }

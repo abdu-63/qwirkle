@@ -2,7 +2,7 @@
 #include "affichage.h"
 
 int main() {
-    srand(time(NULL)); // aléatoire grâce au temps actuelle
+    srand(time(NULL)); // srand = aléatoire grâce au temps actuelle
     int choix_menu = 0;
 
     while (choix_menu != 5) {
@@ -31,15 +31,12 @@ int main() {
                 break;
             case 4: {
                 int choix_score = 0;
-                printf("\n1. Meilleurs scores (Top 10)\n");
-                printf("2. Dernière partie\n");
-                printf("3. Historique complet\n");
+                printf("\n1. Dernière partie\n");
+                printf("2. Historique complet\n");
                 printf("Choix : ");
-                if (scanf("%d", &choix_score) == 1) {
-                    if (choix_score == 1) lire_meilleurs_scores();
-                    else if (choix_score == 2) lire_derniere_partie();
-                    else if (choix_score == 3) lire_scores();
-                }
+                scanf("%d", &choix_score);
+                    if (choix_score == 1) lire_derniere_partie();
+                    else lire_scores();
                 break;
             }
             case 5:

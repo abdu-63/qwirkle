@@ -15,6 +15,5 @@ void sauvegarder_score(char *pseudo, int score); // sauvegarde le score
 void lire_scores(); // lis le score
 void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs); // sauvegarde la dernière partie
 void lire_derniere_partie(); // affiche la dernière partie
-void lire_meilleurs_scores(); // affiche les meilleurs scores triés
 
 #endif // AFFICHAGE_H

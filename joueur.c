@@ -1,9 +1,15 @@
 #include "joueur.h"
 
-// initialise la picohe
+// initialise la pioche avec toutes les tuiles
 void init_pioche(Pioche *p, int mode_degrade) {
     p->mode = mode_degrade;
-    int nb_copies = mode_degrade ? 1 : 3;
+    int nb_copies;
+    if (mode_degrade == 1) {
+        nb_copies = 1;
+    } else {
+        nb_copies = 3;
+    }
+    
     p->nb_restantes = nb_copies * 6 * 6; // 6 formes * 6 couleurs * nb_copies
 
     int index = 0;
