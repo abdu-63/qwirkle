@@ -36,11 +36,13 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
     }
     // vérifier qu'il n'y a pas de doublon de tuile dans la même ligne horizontale
     int c_scan = col - 1;
+    int taille_ligne_h = 1;
     while (c_scan >= 0 && p.grille[lig][c_scan].forme != VIDE_F) {
         if (p.grille[lig][c_scan].forme == f && p.grille[lig][c_scan].couleur == c) {
             printf("Doublon dans la ligne\n");
             return 0;
         }
+        taille_ligne_h++;
         c_scan--;
     }
     c_scan = col + 1;
@@ -49,16 +51,24 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
             printf("Doublon dans la ligne\n");
             return 0;
         }
+        taille_ligne_h++;
         c_scan++;
+    }
+    // vérifier que la ligne ne dépasse pas 6 tuiles
+    if (taille_ligne_h > 6) {
+        printf("Ligne horizontale déjà complète (max 6)\n");
+        return 0;
     }
 
     // vérifier qu'il n'y a pas de doublon de tuile dans la même colonne verticale
     int l_scan = lig - 1;
+    int taille_ligne_v = 1;
     while (l_scan >= 0 && p.grille[l_scan][col].forme != VIDE_F) {
         if (p.grille[l_scan][col].forme == f && p.grille[l_scan][col].couleur == c) {
             printf("Doublon dans la colonne\n");
             return 0;
         }
+        taille_ligne_v++;
         l_scan--;
     }
     l_scan = lig + 1;
@@ -67,7 +77,13 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
             printf("Doublon dans la colonne\n");
             return 0;
         }
+        taille_ligne_v++;
         l_scan++;
+    }
+    // vérifier que la colonne ne dépasse pas 6 tuiles
+    if (taille_ligne_v > 6) {
+        printf("Colonne verticale déjà complète (max 6)\n");
+        return 0;
     }
     
     if (premier_tour)
