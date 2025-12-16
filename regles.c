@@ -34,6 +34,42 @@ int est_coup_valide(Plateau p, int lig, int col, Forme f, Couleur c, int premier
             }
         }
     }
+    // vérifier qu'il n'y a pas de doublon de tuile dans la même ligne horizontale
+    int c_scan = col - 1;
+    while (c_scan >= 0 && p.grille[lig][c_scan].forme != VIDE_F) {
+        if (p.grille[lig][c_scan].forme == f && p.grille[lig][c_scan].couleur == c) {
+            printf("Doublon dans la ligne\n");
+            return 0;
+        }
+        c_scan--;
+    }
+    c_scan = col + 1;
+    while (c_scan < COLONNES && p.grille[lig][c_scan].forme != VIDE_F) {
+        if (p.grille[lig][c_scan].forme == f && p.grille[lig][c_scan].couleur == c) {
+            printf("Doublon dans la ligne\n");
+            return 0;
+        }
+        c_scan++;
+    }
+
+    // vérifier qu'il n'y a pas de doublon de tuile dans la même colonne verticale
+    int l_scan = lig - 1;
+    while (l_scan >= 0 && p.grille[l_scan][col].forme != VIDE_F) {
+        if (p.grille[l_scan][col].forme == f && p.grille[l_scan][col].couleur == c) {
+            printf("Doublon dans la colonne\n");
+            return 0;
+        }
+        l_scan--;
+    }
+    l_scan = lig + 1;
+    while (l_scan < LIGNES && p.grille[l_scan][col].forme != VIDE_F) {
+        if (p.grille[l_scan][col].forme == f && p.grille[l_scan][col].couleur == c) {
+            printf("Doublon dans la colonne\n");
+            return 0;
+        }
+        l_scan++;
+    }
+    
     if (premier_tour)
         return 1;
     if (voisins_trouves == 0) {
