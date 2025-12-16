@@ -19,8 +19,6 @@ char get_char_forme(Forme f) {
             return '.'; // case vide
     }
 }
-
-// fonction pour la couleur
 const char* get_color_code(Couleur c) {
     switch(c) {
         case ROUGE:
@@ -40,24 +38,24 @@ const char* get_color_code(Couleur c) {
     }
 }
 
-// Affiche le plateau de jeu sur la console avec boucle for
 void afficher_plateau(Plateau p) {
+    // affiche les lettres des colonnes
     printf("   ");
-    // boucle pour afficher les lettres des colonnes (a-z car 26)
     for (int j = 0; j < COLONNES; j++) {
         printf("%c ", 'a' + j);
     }
     printf("\n");
-
+    // boucle des lignes
     for (int i = 0; i < LIGNES; i++) {
-        // boucle pour afficher les lettres des lignes (a-l car 12)
         printf("%c  ", 'a' + i);
+        // boucle des colonnes
         for (int j = 0; j < COLONNES; j++) {
             Tuile t = p.grille[i][j];
+            // affiche la case vide
             if (t.forme == VIDE_F) {
-                printf(". "); // Case vide
+                printf(". ");
             } else {
-                // Affiche la tuile avec sa couleur
+                // %s = couleur, %c la forme ex: X, %s désactive la couleur,
                 printf("%s%c%s ", get_color_code(t.couleur), get_char_forme(t.forme), COLOR_RESET);
             }
         }
@@ -65,20 +63,18 @@ void afficher_plateau(Plateau p) {
     }
 }
 
-// affiche la main de 6 du joueur avec les couleurs et formes.
 void afficher_main(Joueur j) {
     printf("Main de %s : ", j.pseudo);
     for (int i = 0; i < 6; i++) {
         Tuile t = j.main[i];
         if (t.forme != VIDE_F) {
-            // Affiche la tuile
+            // %s = couleur, %c la forme ex: X, %d le numéro de la couleur, %s désactive la couleur,
             printf("[%s%c%d%s] ", get_color_code(t.couleur), get_char_forme(t.forme), t.couleur, COLOR_RESET);
         }
     }
     printf("\n");
 }
 
-// procedure pour affichier les règles de saisie
 void afficher_regles_saisie() {
     printf("Format : ligne colonne Forme Couleur (ex: ebC1)\n");
     printf("Couleurs: 0:Rouge, 1:Vert, 2:Jaune, 3:Bleu, 4:Violet, 5:Orange\n");
@@ -86,7 +82,6 @@ void afficher_regles_saisie() {
     printf("Saisir fin pour arreter la partie en cours\n");
 }
 
-// procedure pour affichier le menu principale
 void afficher_menu_principal() {
     printf("\nQWIRKLE\n");
     printf("1. Nouvelle Partie\n");
@@ -96,7 +91,6 @@ void afficher_menu_principal() {
     printf("Votre choix : ");
 }
 
-// procedure pour afficher les règles
 void afficher_regles() {
     printf("\nRègles du jeu\n");
     printf("Aligner des tuiles avec même couleur ou forme\n");
@@ -108,17 +102,23 @@ void afficher_regles() {
 // convertit un caractère saisi par le joueur en type énuméré forme pour indiquer la forme de la tuile
 Forme char_vers_forme(char c) {
     switch(c) {
-        case 'O': case 'o':
+        case 'O':
+        case 'o':
             return ROND;
-        case 'C': case 'c':
+        case 'C':
+        case 'c':
             return CARRE;
-        case 'L': case 'l':
+        case 'L':
+        case 'l':
             return LOSANGE;
-        case 'E': case 'e':
+        case 'E':
+        case 'e':
             return ETOILE;
-        case 'T': case 't':
+        case 'T':
+        case 't':
             return TREFLE;
-        case 'X': case 'x':
+        case 'X':
+        case 'x':
             return CROIX;
         default:
             return VIDE_F;
@@ -129,7 +129,6 @@ Forme char_vers_forme(char c) {
 void sauvegarder_score(char *pseudo, int score) {
     FILE *fichier = fopen("scores.txt", "a"); // "a" pour ajouter à la fin
     if (fichier != NULL) {
-        // On écrit le nom et le score séparés par un espace
         fprintf(fichier, "%s %d\n", pseudo, score);
         fclose(fichier);
         printf("\nLe score est sauvegardé dans l'historique\n");
@@ -138,7 +137,6 @@ void sauvegarder_score(char *pseudo, int score) {
     }
 }
 
-// lis et affiche le fichier des scores
 void lire_scores() {
     FILE *fichier = fopen("scores.txt", "r"); // "r" pour lire
     char nom[50];
@@ -150,7 +148,6 @@ void lire_scores() {
         return;
     }
 
-    // On lit tant qu'il y a des lignes (format : string int)
     while (fscanf(fichier, "%s %d", nom, &score) == 2) {
         printf("%-15s : %d points\n", nom, score);
     }
@@ -159,7 +156,6 @@ void lire_scores() {
     printf("\n");
 }
 
-// sauvegarde les scores de la dernière partie (tous les joueurs)
 void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs) {
     FILE *fichier = fopen("derniere_partie.txt", "w"); // "w" pour écraser
     if (fichier != NULL) {
@@ -170,7 +166,6 @@ void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs) {
     }
 }
 
-// affiche les scores de la dernière partie
 void lire_derniere_partie() {
     FILE *fichier = fopen("derniere_partie.txt", "r");
     char nom[50];

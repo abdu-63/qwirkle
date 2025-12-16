@@ -3,17 +3,17 @@
 
 #include "structures.h"
 
-void afficher_plateau(Plateau p); // affiche le plateau
-void afficher_main(Joueur j); // affiche la main
-void afficher_regles_saisie(); // affiche les règles
-void afficher_menu_principal(); // affiche le menu principale
-void afficher_regles(); // affiche les règles
+void afficher_plateau(Plateau p);
+void afficher_main(Joueur j);
+void afficher_regles_saisie();
+void afficher_menu_principal();
+void afficher_regles();
 Forme char_vers_forme(char c); // convertit un caractère saisi par le joueur en type énuméré forme pour indiquer la forme de la tuile
-char get_char_forme(Forme f); // convertit l'enum forme en caractère imprimable sur le plateau
-const char* get_color_code(Couleur c); // fonction pour la couleur
-void sauvegarder_score(char *pseudo, int score); // sauvegarde le score
-void lire_scores(); // lis le score
-void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs); // sauvegarde la dernière partie
-void lire_derniere_partie(); // affiche la dernière partie
+char get_char_forme(Forme f);
+const char* get_color_code(Couleur c);
+void sauvegarder_score(char *pseudo, int score);
+void lire_scores();
+void sauvegarder_derniere_partie(Joueur joueurs[], int nb_joueurs);
+void lire_derniere_partie();
 
 #endif // AFFICHAGE_H
