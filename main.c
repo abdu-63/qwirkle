@@ -32,7 +32,7 @@ int main() {
             case 4: {
                 int choix_score = 0;
                 printf("\n1. Dernière partie\n");
-                printf("2. Historique complet\n");
+                printf("2. Meilleurs scores\n");
                 printf("Choix : ");
                 scanf("%d", &choix_score);
                     if (choix_score == 1) lire_derniere_partie();

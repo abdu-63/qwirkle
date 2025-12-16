@@ -142,7 +142,7 @@ void lire_scores() {
     char nom[50];
     int score;
 
-    printf("\nHistorique des scores\n");
+    printf("\nMeilleurs scores\n");
     if (fichier == NULL) {
         printf("Aucun score pour le moment\n");
         return;
